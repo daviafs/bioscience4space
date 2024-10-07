@@ -146,7 +146,7 @@ if data_3 is not None:
     graph_data_3 = data_3
 
 # Exibe o vídeo local
-video_file = open('/workspaces/bioscience4space/figures_and_videos/background_video.mp4', 'rb')
+video_file = open('/workspaces/bioscience4space/figures_and_videos/Intro_Video.mp4', 'rb')
 video_bytes = video_file.read()
 
 st.video(video_bytes)
@@ -187,23 +187,109 @@ for idx, image in enumerate(image_info):
 
 # Exibe o gráfico ou a mensagem com base na interação da imagem
 if st.session_state.selected_image is not None:
-    with st.expander("**Explore the available data!**"):
-        if st.session_state.selected_image in [2, 3]:  # Imagens 3 e 4 (índices 2 e 3)
+    with st.expander(" **Explore the available data!**"):
+        if st.session_state.selected_image in [1, 2, 3]: 
             st.write("*Unfortunately, the data is not available for now. Please return in the future.*")
         else:
             selected_image_info = image_info[st.session_state.selected_image]
 
             # Exibe um expander aninhado para selecionar o conjunto de dados
+            # Adiciona essa seção dentro do expander onde o gráfico é exibido
             if st.session_state.selected_image == 0:  # Imagem 1
                 dataset_option = st.selectbox("**Choose a dataset:**", ["OSD-379", "OSD-665"])
+                
+                # Verifica qual dataset foi escolhido e cria a seleção de colunas correspondente
                 if dataset_option == "OSD-379":
-                    st.line_chart(graph_data_1)  # Gráfico 1
+                    parameter = st.selectbox("Escolha um parâmetro", ["Sample distribution by sample type", "Sample distribution by category", "RNA Fragment size by sample group"])
+                    if parameter == "Sample distribution by sample type":
+                        st.image("/workspaces/bioscience4space/figures_and_videos/graphic1.webp", use_column_width=True)
+                    if parameter == "Sample distribution by category":
+                        st.image("/workspaces/bioscience4space/figures_and_videos/graphic2.webp", use_column_width=True)
+                    if parameter == "RNA Fragment size by sample group":
+                        st.image("/workspaces/bioscience4space/figures_and_videos/graphic 3.webp", use_column_width=True)
+
+
+                     # Adiciona a tabela com 3 colunas e 2 linhas
+                    st.write("#### **Mission overview:** *Rodent Research Reference Mission (RRRM-1)*")
+                    # Adiciona caixas de texto estilizadas com título e informação
+                    st.markdown("""
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 1px;">
+                        <strong>Objective:</strong> To examine the physiology of aging and the
+                                        effect of age on disease progression using
+                                        groups of young and old mice flown in space
+                                        and kept on Earth.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>Pre-flight preparation:</strong> The Rodent Research-23 (RR-23) mission began with the preparation 
+                                                                of twenty (20) male C57BL/6J mice, aged 16 to 17 weeks. These animals
+                                                                 were selected to study the function of arteries, veins, and lymphatic
+                                                                 structures in the eyes, as well as changes in the retina before and
+                                                                 after spaceflight. The primary objective of the research is to clarify
+                                                                 whether these vascular changes impair visual function, considering that
+                                                                 at least 40% of astronauts experience visual impairment known as Spaceflight
+                                                                 Associated Neuro-Ocular Syndrome (SANS) during long-duration spaceflights. Prior
+                                                                 to launch, the protocol was approved by NASA's Institutional Animal Care and Use
+                                                                 Committee (IACUC), and all recommendations from the Guide for the Care and Use of
+                                                                 Laboratory Animals were followed.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>During the experiment:</strong> The twenty mice were launched in a transport carrier on SpaceX-21 on December 6,
+                                                                 2020. After arriving at the International Space Station (ISS), they were transferred
+                                                                to two rodent habitats, where they were maintained in microgravity for 38 days. It is
+                                                                 important to note that no tests or procedures were conducted aboard the ISS. After
+                                                                 returning to Earth for Live Animal Recovery (LAR) on January 13, 2021, the mice were
+                                                                 transported by helicopter to the Kennedy Space Center and then transferred to Texas
+                                                                 A&M University (TAMU) along with an additional 20 mice from the Habitat Control Group 
+                                                                 (HGC) and 20 from the Vivarium Control Group (VGC).
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px; margin-bottom: 20px;">
+                        <strong>Post-flight procedures:</strong> After arriving at the TAMU Animal Care Facility (ACF), the mice underwent post-flight 
+                                                                procedures, followed by euthanasia and tissue collection by the principal investigator 
+                                                                (PI) team. The collected data are of paramount importance, as they include measurements
+                                                                 of Intraocular Pressure (IOP), ultrasound, and Optical Coherence Tomography (OCT) from
+                                                                 a subset of each group of mice. The analysis of the collected tissues encompasses a variety
+                                                                 of organs and structures, including adrenal glands, brain, brown adipose tissue, and the
+                                                                extensor digitorum longus (EDL), among others. The RR-23 payload produced relevant data,
+                                                                 such as the temperature of the animal enclosure, relative humidity, and environmental
+                                                                 monitoring data from the ISS. This study may shed light on vascular complications connected
+                                                                 to ocular diseases found in humans on Earth, enabling the development of more advanced
+                                                                 preventive strategies and treatments for patients.
+                    </div>
+                    """, unsafe_allow_html=True)
+
                 if dataset_option == "OSD-665":
-                    st.line_chart(graph_data_2)  # Gráfico 2
-            if st.session_state.selected_image == 1:  # Imagem 1
-                dataset_option = st.selectbox("**Choose a dataset:**", ["OSD-678"])
-                if dataset_option == "OSD-678":
-                    st.line_chart(graph_data_3)  # Gráfico 1
+                    column_names = data_2.columns.tolist()  # Obtém os nomes das colunas do dataset OSD-665
+                    selected_column = st.selectbox("**Select the parameter:**", column_names)  # Seleção da coluna
+                    # Plota o gráfico da coluna selecionada
+                    # Agrupa os dados
+                    grouped_data = data_2[selected_column].value_counts()
+
+                    # Verifica o tipo de dado e plota o gráfico adequado
+                    if pd.api.types.is_numeric_dtype(data_2[selected_column]):
+                        st.line_chart(grouped_data)  # Para dados numéricos
+                    else:
+                        st.bar_chart(grouped_data)  # Para dados categóricos
+
+                    # Adiciona a tabela com 3 colunas e 2 linhas
+                    st.write("#### **Mission overview:** *Rodent Research-23 mission*")
+                     # Adiciona caixas de texto estilizadas com título e informação
+                    st.markdown("""
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 1px;">
+                        <strong>Objective:</strong> To better understand the effects of spaceflight
+                                      on the eyes, specifically on the structure and function of the 
+                                     arteries, veins, and lymphatic vessels that are needed to
+                                      maintain vision.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>Pre-flight preparation:</strong> informação adicional sobre o OSD-665.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>During the experiment:</strong> outra informação relacionada ao OSD-665.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px; margin-bottom: 20px;">
+                        <strong>Post-flight procedures:</strong> outra informação relacionada ao OSD-665.
+                    </div>
+                    """, unsafe_allow_html=True)
            
 # Sidebar content
 st.sidebar.title("Biosciences for Space (B4S)")
