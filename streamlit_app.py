@@ -231,6 +231,8 @@ with st.sidebar.expander("ℹ️ **About the Challenge**"):
 
 #----------------Gráfico
 
+#####GRAFICO 1
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -302,6 +304,8 @@ plt.legend()
 plt.grid(True, axis='y')
 plt.show()
 
+
+#####GRAFICO 2
 # Refazendo o código para puxar os dados de um arquivo Excel em vez de usar um DataFrame simulado
 
 import pandas as pd
@@ -375,6 +379,8 @@ plt.grid(True, axis='y')
 
 # Exibir o gráfico
 plt.show()
+
+#####GRAFICO 3
 
 import pandas as pd
 import matplotlib.pyplot as plt
