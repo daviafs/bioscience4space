@@ -220,6 +220,53 @@ if st.session_state.selected_image is not None:
                                         and kept on Earth.
                     </div>
                     <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>Pre-flight preparation:</strong> A total of 40 female BALB/cAnNTac mice were used in the study, consisting 
+                                                                of 20 young mice (10 to 16 weeks) and 20 old mice (30 to 52 weeks), along with
+                                                                 40 basal control mice, 40 Habitat Ground Control (HGC) mice, and 40 Vivarium Ground
+                                                                 Control (VGC) mice. All mice were monitored daily and acclimated to environments 
+                                                                similar to those of the flight. 
+
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
+                        <strong>During the experiment:</strong> The flight and HGC mice were exposed to mold in their food and were grouped
+                                                                 by weight and age. After 30-40 days on Earth, 20 mice (10 young and 10 old)
+                                                                 returned from space, while another 20 (10 young and 10 old) remained in orbit 
+                                                                for approximately 62 days before euthanasia and sample collection, which included
+                                                                 7 to 10 liver samples per group. 
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px; margin-bottom: 20px;">
+                        <strong>Post-flight procedures:</strong> During the return, the mice faced stressors due to poor weather conditions, 
+                                                                resulting in motion sickness-like symptoms, and were housed with 10 mice per
+                                                                cage for 7 days instead of the expected 2-3 days for rescue. Basal control mice
+                                                                 were sacrificed on the first day after launch, while the remaining mice were kept
+                                                                 under observation on Earth.
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                if dataset_option == "OSD-665":
+                    column_names = data_2.columns.tolist()  # Obtém os nomes das colunas do dataset OSD-665
+                    selected_column = st.selectbox("**Select the parameter:**", column_names)  # Seleção da coluna
+                    # Plota o gráfico da coluna selecionada
+                    # Agrupa os dados
+                    grouped_data = data_2[selected_column].value_counts()
+
+                    # Verifica o tipo de dado e plota o gráfico adequado
+                    if pd.api.types.is_numeric_dtype(data_2[selected_column]):
+                        st.line_chart(grouped_data)  # Para dados numéricos
+                    else:
+                        st.bar_chart(grouped_data)  # Para dados categóricos
+
+                    # Adiciona a tabela com 3 colunas e 2 linhas
+                    st.write("#### **Mission overview:** *Rodent Research-23 mission*")
+                     # Adiciona caixas de texto estilizadas com título e informação
+                    st.markdown("""
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 1px;">
+                        <strong>Objective:</strong> To better understand the effects of spaceflight
+                                      on the eyes, specifically on the structure and function of the 
+                                     arteries, veins, and lymphatic vessels that are needed to
+                                      maintain vision.
+                    </div>
+                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
                         <strong>Pre-flight preparation:</strong> The Rodent Research-23 (RR-23) mission began with the preparation 
                                                                 of twenty (20) male C57BL/6J mice, aged 16 to 17 weeks. These animals
                                                                  were selected to study the function of arteries, veins, and lymphatic
@@ -254,40 +301,6 @@ if st.session_state.selected_image is not None:
                                                                  monitoring data from the ISS. This study may shed light on vascular complications connected
                                                                  to ocular diseases found in humans on Earth, enabling the development of more advanced
                                                                  preventive strategies and treatments for patients.
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                if dataset_option == "OSD-665":
-                    column_names = data_2.columns.tolist()  # Obtém os nomes das colunas do dataset OSD-665
-                    selected_column = st.selectbox("**Select the parameter:**", column_names)  # Seleção da coluna
-                    # Plota o gráfico da coluna selecionada
-                    # Agrupa os dados
-                    grouped_data = data_2[selected_column].value_counts()
-
-                    # Verifica o tipo de dado e plota o gráfico adequado
-                    if pd.api.types.is_numeric_dtype(data_2[selected_column]):
-                        st.line_chart(grouped_data)  # Para dados numéricos
-                    else:
-                        st.bar_chart(grouped_data)  # Para dados categóricos
-
-                    # Adiciona a tabela com 3 colunas e 2 linhas
-                    st.write("#### **Mission overview:** *Rodent Research-23 mission*")
-                     # Adiciona caixas de texto estilizadas com título e informação
-                    st.markdown("""
-                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 1px;">
-                        <strong>Objective:</strong> To better understand the effects of spaceflight
-                                      on the eyes, specifically on the structure and function of the 
-                                     arteries, veins, and lymphatic vessels that are needed to
-                                      maintain vision.
-                    </div>
-                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
-                        <strong>Pre-flight preparation:</strong> informação adicional sobre o OSD-665.
-                    </div>
-                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px;">
-                        <strong>During the experiment:</strong> outra informação relacionada ao OSD-665.
-                    </div>
-                    <div style="border: 2px solid #D3D3D3; padding: 10px; margin-top: 10px; margin-bottom: 20px;">
-                        <strong>Post-flight procedures:</strong> outra informação relacionada ao OSD-665.
                     </div>
                     """, unsafe_allow_html=True)
            
